@@ -1,7 +1,21 @@
-DROP TABLE IF EXISTS library;
+DROP TABLE IF EXISTS library CASCADE;
+DROP TABLE IF EXISTS books CASCADE;
+DROP TABLE IF EXISTS library_books;
+
 
 CREATE TABLE library (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  name TEXT NOT NULL,
-  location TEXT NOT NULL
+  location TEXT NOT NULL,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE books (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  title TEXT NOT NULL
+);
+
+CREATE TABLE library_books (
+  library_id  BIGINT REFERENCES library(id),
+  book_id BIGINT REFERENCES books(id),
+  PRIMARY KEY(library_id, book_id)
 );
